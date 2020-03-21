@@ -9,12 +9,6 @@ import java.io.IOException;
 
 public class HardcoreTest extends BaseTest {
     private String textToSearch = "Google Cloud Platform Pricing Calculator";
-    private String textToMachineClass = "Regular";
-    private String textToMachineType = "n1-standard-8 (vCPUs: 8, RAM: 30GB)";
-    private String textToDatacenterLocation = "Frankfurt (europe-west3)";
-    private String textToLocalSSD = "2x375 GB";
-    private String textToCommitedUsage = "1 Year";
-    private String totalCost = "1,082.77";
 
     @Test
     public void fillCalculatorSendEmailAndCheckSum() throws IOException, UnsupportedFlavorException {
@@ -23,15 +17,16 @@ public class HardcoreTest extends BaseTest {
         googlePage.clickOnIconSearch();
         SearchResultsPage searchResultsPage = googlePage.PasteTextInSearchField(textToSearch);
         CalculatorPage calculatorPage = searchResultsPage.goToCalculatorPage(textToSearch)
-                .activateComputeEngine().pasteNumberOfInstance("4");
+                .activateComputeEngine().pasteNumberOfInstance(numberOfInstances);
+
 
         ResultPage resultPage = calculatorPage.clearFieldInstancesFor()
-                .chooseSoftware("Free: Debian, CentOS, CoreOS, Ubuntu, or other User Provided OS")
-                .chooseMachineClass(textToMachineClass)
-                .chooseMachineType(textToMachineType)
-                .tickAddGPUs().chooseNumberOfGPUs("1").chooseGPUType("NVIDIA Tesla V100")
-                .chooseLocalSSD(textToLocalSSD).chooseDatacenterLocation(textToDatacenterLocation)
-                .chooseCommitedUsage(textToCommitedUsage)
+                .chooseSoftware(software)
+                .chooseMachineClass(machineClass)
+                .chooseMachineType(machineType)
+                .tickAddGPUs().chooseNumberOfGPUs(numberOfGPUs).chooseGPUType(GPUType)
+                .chooseLocalSSD(localSSD).chooseDatacenterLocation(dataCenterLocation)
+                .chooseCommitedUsage(commitedUsage)
                 .clickAddToEstimate();
 
         FillEmailPage emailPage3 = resultPage.clickEmailEstimate();
