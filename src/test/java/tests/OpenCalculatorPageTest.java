@@ -9,19 +9,17 @@ import pageobject.SearchResultsPage;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class OpenCalculatorPageTest extends BaseTest {
-    private String textToSearch = "Google Cloud Platform Pricing Calculator";
-    private String computeEngineButton = "Compute Engine";
+
     @Test
     public void openCalculatorPage(){
         GooglePage googlePage = new GooglePage(driver);
         googlePage.goToPage();
         googlePage.clickOnIconSearch();
-        SearchResultsPage searchResultsPage = googlePage.PasteTextInSearchField(textToSearch);
-        CalculatorPage calculatorPage = searchResultsPage.goToCalculatorPage(textToSearch);
+        SearchResultsPage searchResultsPage = googlePage.PasteTextInSearchField(HardcoreTest.TEXT_TO_SEARCH);
+        CalculatorPage calculatorPage = searchResultsPage.goToCalculatorPage(HardcoreTest.TEXT_TO_SEARCH);
 
-        Assert.assertTrue("Title of the page is wrong",calculatorPage.isTitleTrue(textToSearch));
+        Assert.assertTrue("Title of the page is wrong",calculatorPage.isTitleTrue(HardcoreTest.TEXT_TO_SEARCH));
         Assert.assertTrue("There is no compute engine button", calculatorPage.isComputeEngineButtonExist());
-
 
     }
 }

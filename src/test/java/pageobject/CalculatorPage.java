@@ -1,5 +1,6 @@
 package pageobject;
 
+import model.Engine;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -167,5 +168,17 @@ public class CalculatorPage extends BasePage {
         List<WebElement> webElementList = driver.findElements(By.xpath("//*[text()='Compute Engine']"));
        // new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(xpathComputeEngine));
         return webElementList.size()!=0;
+    }
+
+    public ResultPage createNewEngine(Engine testEngine) {
+        return pasteNumberOfInstance(testEngine.getNumberOfInstances())
+                .clearFieldInstancesFor()
+                .chooseSoftware(testEngine.getSoftware())
+                .chooseMachineClass(testEngine.getMachineClass())
+                .chooseMachineType(testEngine.getMachineType())
+                .tickAddGPUs().chooseNumberOfGPUs(testEngine.getNumberOfGPUs()).chooseGPUType(testEngine.getGPUType())
+                .chooseLocalSSD(testEngine.getLocalSSD()).chooseDatacenterLocation(testEngine.getDataCenterLocation())
+                .chooseCommitedUsage(testEngine.getCommitedUsage())
+                .clickAddToEstimate();
     }
 }

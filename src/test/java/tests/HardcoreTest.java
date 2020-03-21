@@ -1,33 +1,28 @@
 package tests;
 
+import model.Engine;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import pageobject.*;
+import service.EngineCreator;
 
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 public class HardcoreTest extends BaseTest {
-    private String textToSearch = "Google Cloud Platform Pricing Calculator";
+    protected static final String TEXT_TO_SEARCH = "Google Cloud Platform Pricing Calculator";
 
     @Test
     public void fillCalculatorSendEmailAndCheckSum() throws IOException, UnsupportedFlavorException {
         GooglePage googlePage = new GooglePage(driver);
         googlePage.goToPage();
         googlePage.clickOnIconSearch();
-        SearchResultsPage searchResultsPage = googlePage.PasteTextInSearchField(textToSearch);
-        CalculatorPage calculatorPage = searchResultsPage.goToCalculatorPage(textToSearch)
-                .activateComputeEngine().pasteNumberOfInstance(numberOfInstances);
+        SearchResultsPage searchResultsPage = googlePage.PasteTextInSearchField(TEXT_TO_SEARCH);
+        CalculatorPage calculatorPage = searchResultsPage.goToCalculatorPage(TEXT_TO_SEARCH)
+                .activateComputeEngine();
 
-
-        ResultPage resultPage = calculatorPage.clearFieldInstancesFor()
-                .chooseSoftware(software)
-                .chooseMachineClass(machineClass)
-                .chooseMachineType(machineType)
-                .tickAddGPUs().chooseNumberOfGPUs(numberOfGPUs).chooseGPUType(GPUType)
-                .chooseLocalSSD(localSSD).chooseDatacenterLocation(dataCenterLocation)
-                .chooseCommitedUsage(commitedUsage)
-                .clickAddToEstimate();
+        Engine testEngine = EngineCreator.withCredentialsFromProperty();
+        ResultPage resultPage = calculatorPage.createNewEngine(testEngine);
 
         FillEmailPage emailPage3 = resultPage.clickEmailEstimate();
         TimeSite timeSite = new TimeSite(driver);
@@ -35,7 +30,7 @@ public class HardcoreTest extends BaseTest {
         emailPage3.switchAndUseEmailAddress(emailAddress).clickButtonSendEmail();
         timeSite.getMessage();
 
-        Assert.assertTrue("Total estimated cost is wrong", timeSite.isCostTrue(totalCost));
+        Assert.assertTrue("Total estimated cost is wrong", timeSite.isCostTrue(testEngine.getTotalCost()));
 
     }
 }
