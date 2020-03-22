@@ -1,5 +1,7 @@
 package pageobject;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -10,8 +12,11 @@ import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class TimeSite extends BasePage {
+    private final Logger logger = LogManager.getRootLogger();
+
     public TimeSite(WebDriver driver) {
         super(driver);
         url = "https://10minutemail.com";
@@ -34,16 +39,22 @@ public class TimeSite extends BasePage {
     }
 
     public String copyEmailAddress() throws IOException, UnsupportedFlavorException {
+
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until((ExpectedCondition<Boolean>) wdriver -> ((JavascriptExecutor) driver).executeScript(
                 "return document.readyState"
         ).equals("complete"));
 
         new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.visibilityOf(copyEmailAddress));
+                .until(ExpectedConditions.visibilityOf(mailAddress));
+        WebElement input = driver.findElement(By.id("mail_address"));
         copyEmailAddress.click();
-        return (String) Toolkit.getDefaultToolkit()
+        String address = input.getAttribute("value");
+        logger.info("Email address was copy");
+        if(address==null){
+            return (String) Toolkit.getDefaultToolkit()
                 .getSystemClipboard().getData(DataFlavor.stringFlavor);
+        }else return address;
     }
 
     public void getMessage() {

@@ -1,6 +1,8 @@
 package pageobject;
 
 import model.Engine;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +15,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class CalculatorPage extends BasePage {
+    private final Logger logger = LogManager.getRootLogger();
+
     public CalculatorPage(WebDriver driver) {
         super(driver);
     }
@@ -54,6 +58,7 @@ public class CalculatorPage extends BasePage {
         driver.switchTo().frame("myFrame");
         new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(xpathComputeEngine));
         xpathComputeEngine.click();
+        logger.info("Frame was activated");
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         return this;
     }
@@ -166,19 +171,20 @@ public class CalculatorPage extends BasePage {
                 .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.xpath("//section[@class='devsite-wrapper']//iframe")));
         driver.switchTo().frame("myFrame");
         List<WebElement> webElementList = driver.findElements(By.xpath("//*[text()='Compute Engine']"));
-       // new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(xpathComputeEngine));
-        return webElementList.size()!=0;
+        // new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(xpathComputeEngine));
+        return webElementList.size() != 0;
     }
 
     public ResultPage createNewEngine(Engine testEngine) {
-        return pasteNumberOfInstance(testEngine.getNumberOfInstances())
+        pasteNumberOfInstance(testEngine.getNumberOfInstances())
                 .clearFieldInstancesFor()
                 .chooseSoftware(testEngine.getSoftware())
                 .chooseMachineClass(testEngine.getMachineClass())
                 .chooseMachineType(testEngine.getMachineType())
                 .tickAddGPUs().chooseNumberOfGPUs(testEngine.getNumberOfGPUs()).chooseGPUType(testEngine.getGPUType())
                 .chooseLocalSSD(testEngine.getLocalSSD()).chooseDatacenterLocation(testEngine.getDataCenterLocation())
-                .chooseCommitedUsage(testEngine.getCommitedUsage())
-                .clickAddToEstimate();
+                .chooseCommitedUsage(testEngine.getCommitedUsage());
+        logger.info("Calculator was filled");
+        return clickAddToEstimate();
     }
 }

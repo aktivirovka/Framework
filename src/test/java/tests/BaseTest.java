@@ -5,14 +5,13 @@ import driver.DriverSingleton;
 //import org.junit.Before;
 //import org.testng.annotations.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.GeckoDriverService;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
+import util.TestListener;
 
-import java.io.File;
-import java.net.URL;
 
+@Listeners({TestListener.class})
 abstract public class BaseTest {
     protected WebDriver driver;
 
@@ -25,10 +24,10 @@ abstract public class BaseTest {
                 .usingAnyFreePort();*/
 
         driver = DriverSingleton.getDriver();
-     //   driver.manage().window().maximize();
+
     }
 
-    @AfterMethod(alwaysRun = true)                             //отличия after from afterMethod
+    @AfterMethod(alwaysRun = true)
     public void closeDriver() {
         DriverSingleton.closeDriver();
     }
