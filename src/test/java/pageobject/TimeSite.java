@@ -44,6 +44,9 @@ public class TimeSite extends BasePage {
         wait.until((ExpectedCondition<Boolean>) wdriver -> ((JavascriptExecutor) driver).executeScript(
                 "return document.readyState"
         ).equals("complete"));
+        WebElement html = driver.findElement(By.tagName("html"));
+        html.sendKeys(Keys.chord(Keys.CONTROL, Keys.SUBTRACT));
+        html.sendKeys(Keys.chord(Keys.CONTROL, Keys.SUBTRACT));
 
         new WebDriverWait(driver, 15)
                 .until(ExpectedConditions.visibilityOf(mailAddress));
@@ -51,6 +54,7 @@ public class TimeSite extends BasePage {
         copyEmailAddress.click();
         String address = input.getAttribute("value");
         logger.info("Email address was copy");
+        html.sendKeys(Keys.chord(Keys.CONTROL, "0"));
         if(address==null){
             return (String) Toolkit.getDefaultToolkit()
                 .getSystemClipboard().getData(DataFlavor.stringFlavor);
