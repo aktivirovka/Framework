@@ -28,9 +28,9 @@ public class HardcoreTest extends BaseTest {
         TimeSite timeSite = new TimeSite(driver);
         String emailAddress = timeSite.openSiteInNewTab().copyEmailAddress();
         emailPage3.switchAndUseEmailAddress(emailAddress).clickButtonSendEmail();
-        timeSite.getMessage();
+        String emailMessage = timeSite.getMessage();
 
-        Assert.assertTrue("Total estimated cost is wrong", timeSite.isCostTrue(testEngine.getTotalCost()));
+        Assert.assertTrue("Total estimated cost is wrong", timeSite.isCostTrue(testEngine.getTotalCost(), emailMessage));
 
     }
 }
