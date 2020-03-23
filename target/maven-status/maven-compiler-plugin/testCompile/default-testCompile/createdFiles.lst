@@ -1,0 +1,15 @@
+pageobject\GooglePage.class
+pageobject\SearchResultsPage.class
+model\Engine.class
+tests\HardcoreTest.class
+service\EngineCreator.class
+tests\BaseTest.class
+tests\OpenCalculatorPageTest.class
+pageobject\FillEmailPage.class
+util\TestListener.class
+pageobject\TimeSite.class
+service\TestDataReader.class
+pageobject\ResultPage.class
+driver\DriverSingleton.class
+pageobject\CalculatorPage.class
+pageobject\BasePage.class
