@@ -5,7 +5,7 @@
 *.jar
 *.war
 *.ear
-
+target/
 test-output/
 
 # Eclipse
