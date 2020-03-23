@@ -1,9 +1,18 @@
-target/
+# Java files
 *.class
+
+# Package Files #
 *.jar
 *.war
 *.ear
-*.logs
-*.iml
+target/
+test-output/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Idea
 .idea/
-.eclipse
+*.iml
