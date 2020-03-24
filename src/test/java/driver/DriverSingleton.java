@@ -8,6 +8,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class DriverSingleton {
 

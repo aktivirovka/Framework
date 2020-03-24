@@ -3,7 +3,7 @@
 <suite name="Smoke" verbose="1" >
     <test name="OpenCalculatorPageTest">
         <classes>
-            <class name="tests.OpenCalculatorPageTest" />
+            <class name="tests.HardcoreTest" />
         </classes>
     </test>
 </suite>

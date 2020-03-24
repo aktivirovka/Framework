@@ -10,12 +10,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import util.DropdownSelector;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class CalculatorPage extends BasePage {
     private final Logger logger = LogManager.getRootLogger();
+    private final DropdownSelector dropdownSelector = new DropdownSelector();
 
     public CalculatorPage(WebDriver driver) {
         super(driver);
@@ -50,12 +52,15 @@ public class CalculatorPage extends BasePage {
     private String xpathChoiceToPaste = "//*[@class='md-select-menu-container md-active md-clickable']//*[contains(text(), '%s')]";
     private String xpathGPUProperties = "//div[@class='md-select-menu-container md-active md-clickable']//div[contains(text(),'%s')]";
 
+    private By frameLocator = By.xpath("//section[@class='devsite-wrapper']//iframe");
+
 
     public CalculatorPage activateComputeEngine() {
         driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
         new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.xpath("//section[@class='devsite-wrapper']//iframe")));
+                .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
         driver.switchTo().frame("myFrame");
+
         new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(xpathComputeEngine));
         xpathComputeEngine.click();
         logger.info("Frame was activated");
@@ -65,67 +70,82 @@ public class CalculatorPage extends BasePage {
 
 
     public CalculatorPage pasteNumberOfInstance(String number) {
-        new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.elementToBeClickable(xpathNumberOfInstance));
-        xpathNumberOfInstance.click();
-        xpathNumberOfInstance.sendKeys(number);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!pasteNumberOfInstance");
+            new WebDriverWait(driver, 5)
+                    .until(ExpectedConditions.elementToBeClickable(xpathNumberOfInstance));
+            xpathNumberOfInstance.click();
+            xpathNumberOfInstance.sendKeys(number);
         return this;
     }
 
     public CalculatorPage clearFieldInstancesFor() {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!ClearField");
         xpathInstancesFor.click();
         xpathInstancesFor.clear();
         return this;
     }
 
     public CalculatorPage chooseSoftware(String choice) {
-        xpathSoftware.click();
-        String fullName = String.format(xpathChoiceToPaste, choice);
-        new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(fullName))));
-        driver.findElement(By.xpath(fullName)).click();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!chooseSoftware");
+            //WebElement element = driver.findElement(By.xpath("//md-select[@ng-model = 'listingCtrl.computeServer.os']"));
+            //xpathSoftware.click();
+
+            String fullName = String.format(xpathChoiceToPaste, choice);
+            dropdownSelector.trySelectingOption(driver, xpathSoftware, fullName);
+
+            //new WebDriverWait(driver, 5)
+            //        .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(fullName))));
+            //driver.findElement(By.xpath(fullName)).click();
         return this;
     }
 
     public CalculatorPage chooseMachineClass(String choice) {
-        xpathMachineClass.click();
-        String fullName = String.format(xpathChoiceToPaste, choice);
-        new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(fullName))));
-        driver.findElement(By.xpath(fullName)).click();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!chooseMachineClass");
+            //xpathMachineClass.click();
+            String fullName = String.format(xpathChoiceToPaste, choice);
+            dropdownSelector.trySelectingOption(driver, xpathMachineClass, fullName);
+            //new WebDriverWait(driver, 5)
+            //        .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(fullName))));
+            //driver.findElement(By.xpath(fullName)).click();
+
         return this;
     }
 
     public CalculatorPage chooseMachineType(String choice) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", xpathMachineClass);
-        xpathMachineType.click();
+       // xpathMachineType.click();
         String fullName = String.format(xpathChoiceToPaste, choice);
-        new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(fullName))));
-        driver.findElement(By.xpath(fullName)).click();
+        dropdownSelector.trySelectingOption(driver, xpathMachineType, fullName);
+                //new WebDriverWait(driver, 15)
+                //.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(fullName))));
+        //driver.findElement(By.xpath(fullName)).click();
         return this;
     }
 
     public CalculatorPage tickAddGPUs() {
-        xpathAddGPUs.click();
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", xpathAddGPUs);
+        //xpathAddGPUs.click();
         return this;
     }
 
     public CalculatorPage chooseNumberOfGPUs(String choice) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
                 , xpathMachineType);
-        xpathChooseNumberOfGPUs.click();
+        //xpathChooseNumberOfGPUs.click();
         String fullName = String.format(xpathGPUProperties, choice);
-        new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(fullName))));
-        driver.findElement(By.xpath(fullName)).click();
+        dropdownSelector.trySelectingOption(driver, xpathChooseNumberOfGPUs, fullName);
+        //new WebDriverWait(driver, 15)
+        //        .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(fullName))));
+        //driver.findElement(By.xpath(fullName)).click();
         return this;
     }
 
     public CalculatorPage chooseGPUType(String choice) {
-        xpathChooseGPUType.click();
+        //xpathChooseGPUType.click();
         String fullName = String.format(xpathGPUProperties, choice);
-        driver.findElement(By.xpath(fullName)).click();
+        dropdownSelector.trySelectingOption(driver, xpathChooseGPUType, fullName);
+        //driver.findElement(By.xpath(fullName)).click();
 
         return this;
     }
@@ -133,29 +153,43 @@ public class CalculatorPage extends BasePage {
     public CalculatorPage chooseLocalSSD(String choice) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
                 , xpathMachineType);
-        xpathChooseLocalSSD.click();
+        //xpathChooseLocalSSD.click();
         String fullName = String.format(xpathChoiceToPaste, choice);
-        new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(fullName))));
-        driver.findElement(By.xpath(fullName)).click();
+        dropdownSelector.trySelectingOption(driver, xpathChooseLocalSSD, fullName);
+        //new WebDriverWait(driver, 15)
+        //        .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(fullName))));
+        //driver.findElement(By.xpath(fullName)).click();
         return this;
     }
 
     public CalculatorPage chooseDatacenterLocation(String choice) {
-        xpathChooseDatacenterLocation.click();
+        //xpathChooseDatacenterLocation.click();
         String fullName = String.format(xpathChoiceToPaste, choice);
-        driver.findElement(By.xpath(fullName)).click();
+        dropdownSelector.trySelectingOption(driver, xpathChooseDatacenterLocation, fullName);
+        //driver.findElement(By.xpath(fullName)).click();
         return this;
     }
 
     public CalculatorPage chooseCommitedUsage(String choice) {
-        xpathChooseCommitedUsage.click();
+        //xpathChooseCommitedUsage.click();
         String fullName = String.format(xpathChoiceToPaste, choice);
-        driver.findElement(By.xpath(fullName)).click();
+        dropdownSelector.trySelectingOption(driver, xpathChooseCommitedUsage, fullName);
+        //driver.findElement(By.xpath(fullName)).click();
         return this;
     }
 
-    public ResultPage clickAddToEstimate() {
+    public ResultPage clickAddToEstimate() throws InterruptedException {
+
+        //new WebDriverWait(driver, 15)
+        //        .until(ExpectedConditions.visibilityOf(xpathButtonAddToEstimate));
+        //new WebDriverWait(driver, 15)
+        //        .until(ExpectedConditions.elementToBeClickable(xpathButtonAddToEstimate));
+//        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
+//                , xpathButtonAddToEstimate);
+//        Thread.sleep(5000);
+       //JavascriptExecutor executor = (JavascriptExecutor) driver;
+        //executor.executeScript("arguments[0].scrollIntoView();", xpathButtonAddToEstimate);
+//        executor.executeScript("arguments[0].click();", xpathButtonAddToEstimate);
         xpathButtonAddToEstimate.click();
         return new ResultPage(driver);
     }
@@ -175,7 +209,7 @@ public class CalculatorPage extends BasePage {
         return webElementList.size() != 0;
     }
 
-    public ResultPage createNewEngine(Engine testEngine) {
+    public ResultPage createNewEngine(Engine testEngine) throws InterruptedException {
         pasteNumberOfInstance(testEngine.getNumberOfInstances())
                 .clearFieldInstancesFor()
                 .chooseSoftware(testEngine.getSoftware())

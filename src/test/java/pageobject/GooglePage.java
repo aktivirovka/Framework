@@ -20,7 +20,7 @@ public class GooglePage extends BasePage {
 
     public GooglePage clickOnIconSearch() {
         new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@class='devsite-searchbox']/input")));//замена xpath
+                .until(ExpectedConditions.elementToBeClickable(iconSearch));
         iconSearch.click();
         return this;
     }

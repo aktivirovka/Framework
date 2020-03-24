@@ -13,7 +13,7 @@ public class HardcoreTest extends BaseTest {
     protected static final String TEXT_TO_SEARCH = "Google Cloud Platform Pricing Calculator";
 
     @Test
-    public void fillCalculatorSendEmailAndCheckSum() throws IOException, UnsupportedFlavorException {
+    public void fillCalculatorSendEmailAndCheckSum() throws IOException, UnsupportedFlavorException, InterruptedException {
         GooglePage googlePage = new GooglePage(driver);
         googlePage.goToPage();
         googlePage.clickOnIconSearch();
