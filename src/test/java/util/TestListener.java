@@ -49,6 +49,10 @@ public class TestListener implements ITestListener {
     }
 
     private void saveScreenshot(){
+        if (!System.getProperty("takescreenshot").equals("true")) {
+            return;
+        }
+
         try {
         File screenCapture = ((TakesScreenshot) DriverSingleton
                 .getDriver())
