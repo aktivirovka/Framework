@@ -61,6 +61,8 @@ public class CalculatorPage extends BasePage {
                 .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
         driver.switchTo().frame("myFrame");
 
+       // dropdownSelector.switchToFrame(driver);
+
         new WebDriverWait(driver, 15).until(ExpectedConditions.elementToBeClickable(xpathComputeEngine));
         xpathComputeEngine.click();
         logger.info("Frame was activated");
@@ -103,7 +105,7 @@ public class CalculatorPage extends BasePage {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!chooseMachineClass");
             //xpathMachineClass.click();
             String fullName = String.format(xpathChoiceToPaste, choice);
-            dropdownSelector.trySelectingOption(driver, xpathMachineClass, fullName);
+        dropdownSelector.trySelectingOption(driver, xpathMachineClass, fullName);
             //new WebDriverWait(driver, 5)
             //        .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(fullName))));
             //driver.findElement(By.xpath(fullName)).click();
@@ -112,10 +114,15 @@ public class CalculatorPage extends BasePage {
     }
 
     public CalculatorPage chooseMachineType(String choice) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", xpathMachineClass);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!chooseMachineType");
+       ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", xpathMachineClass);
+       /* JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,300)");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!scrolllllllllllllllllllllllllllll");*/
        // xpathMachineType.click();
         String fullName = String.format(xpathChoiceToPaste, choice);
         dropdownSelector.trySelectingOption(driver, xpathMachineType, fullName);
+
                 //new WebDriverWait(driver, 15)
                 //.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(fullName))));
         //driver.findElement(By.xpath(fullName)).click();
@@ -123,16 +130,19 @@ public class CalculatorPage extends BasePage {
     }
 
     public CalculatorPage tickAddGPUs() {
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].click();", xpathAddGPUs);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!tickAddGPUs");
+       /* JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", xpathAddGPUs);*/
         //xpathAddGPUs.click();
+        dropdownSelector.clickElement(driver,xpathAddGPUs);
         return this;
     }
 
     public CalculatorPage chooseNumberOfGPUs(String choice) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
-                , xpathMachineType);
+               , xpathMachineType);
         //xpathChooseNumberOfGPUs.click();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!chooseNumberOfGPUs");
         String fullName = String.format(xpathGPUProperties, choice);
         dropdownSelector.trySelectingOption(driver, xpathChooseNumberOfGPUs, fullName);
         //new WebDriverWait(driver, 15)
@@ -163,6 +173,7 @@ public class CalculatorPage extends BasePage {
     }
 
     public CalculatorPage chooseDatacenterLocation(String choice) {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! chooseDatacenterLocation");
         //xpathChooseDatacenterLocation.click();
         String fullName = String.format(xpathChoiceToPaste, choice);
         dropdownSelector.trySelectingOption(driver, xpathChooseDatacenterLocation, fullName);
@@ -171,6 +182,8 @@ public class CalculatorPage extends BasePage {
     }
 
     public CalculatorPage chooseCommitedUsage(String choice) {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! chooseCommitedUsage");
+
         //xpathChooseCommitedUsage.click();
         String fullName = String.format(xpathChoiceToPaste, choice);
         dropdownSelector.trySelectingOption(driver, xpathChooseCommitedUsage, fullName);
@@ -178,7 +191,10 @@ public class CalculatorPage extends BasePage {
         return this;
     }
 
-    public ResultPage clickAddToEstimate() throws InterruptedException {
+    public ResultPage clickAddToEstimate()  {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! clickAddToEstimate");
+
+        // ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", xpathButtonAddToEstimate);
 
         //new WebDriverWait(driver, 15)
         //        .until(ExpectedConditions.visibilityOf(xpathButtonAddToEstimate));
@@ -190,7 +206,14 @@ public class CalculatorPage extends BasePage {
        //JavascriptExecutor executor = (JavascriptExecutor) driver;
         //executor.executeScript("arguments[0].scrollIntoView();", xpathButtonAddToEstimate);
 //        executor.executeScript("arguments[0].click();", xpathButtonAddToEstimate);
-        xpathButtonAddToEstimate.click();
+// dropdownSelector.pressButton(driver, xpathButtonAddToEstimate);
+
+       /* JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", xpathButtonAddToEstimate);*/
+
+        dropdownSelector.clickElement(driver, xpathButtonAddToEstimate);
+
+
         return new ResultPage(driver);
     }
 

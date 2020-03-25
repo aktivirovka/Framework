@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import util.DropdownSelector;
 
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TimeSite extends BasePage {
     private final Logger logger = LogManager.getRootLogger();
+    private final DropdownSelector dropdownSelector = new DropdownSelector();
 
     public TimeSite(WebDriver driver) {
         super(driver);
@@ -41,18 +43,23 @@ public class TimeSite extends BasePage {
 
 
     public TimeSite openSiteInNewTab() {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! openSiteInNewTab");
         createNewTab();
         switchTabByIndex(1);
         driver.get(url);
         return this;
     }
-    public String copyEmailAddress() throws IOException, UnsupportedFlavorException {
+    public String copyEmailAddress()  {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!COPY EMAIL ADDRESS");
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until((ExpectedCondition<Boolean>) wdriver -> ((JavascriptExecutor) driver).executeScript(
                 "return document.readyState"
         ).equals("complete"));
+
+        /*System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! GO TO MY METHOD COPY EMAIL ADDRESS");
+        dropdownSelector.getTextFromWebElement(driver,mailAddress);*/
         new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.visibilityOf(mailAddress));
+                .until(ExpectedConditions.elementToBeClickable(mailAddress));
 
         return mailAddress.getText();
     }
@@ -90,6 +97,7 @@ public class TimeSite extends BasePage {
     }*/
 
     public String getMessage() {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!GET MESSAGE");
         switchTabByIndex(1);
         new WebDriverWait(driver, 30)
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), 'Compute User')]")));

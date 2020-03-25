@@ -7,8 +7,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import util.DropdownSelector;
 
 public class GooglePage extends BasePage {
+    private final DropdownSelector dropdownSelector = new DropdownSelector();
     public GooglePage(WebDriver driver) {
         super(driver);
         url = "https://cloud.google.com/";
@@ -19,9 +21,10 @@ public class GooglePage extends BasePage {
 
 
     public GooglePage clickOnIconSearch() {
-        new WebDriverWait(driver, 15)
+        /*new WebDriverWait(driver, 15)
                 .until(ExpectedConditions.elementToBeClickable(iconSearch));
-        iconSearch.click();
+        iconSearch.click();*/
+        dropdownSelector.clickElement(driver, iconSearch);
         return this;
     }
 

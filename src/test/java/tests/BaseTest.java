@@ -17,12 +17,6 @@ abstract public class BaseTest {
 
     @BeforeMethod()
     public void createDriver() {
-        /*URL url = this.getClass().getClassLoader().getResource("drivers/geckodriver.exe");
-        File file = new File(url.getFile());
-        GeckoDriverService.Builder bldr = (new GeckoDriverService.Builder())
-                .usingDriverExecutable(file)
-                .usingAnyFreePort();*/
-
         driver = DriverSingleton.getDriver();
 
     }

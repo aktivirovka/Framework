@@ -16,17 +16,6 @@ public class EngineCreator {
     public static final String TESTDATA_ENGINE_COMMITED_USAGE = "testdata.engine.commitedUsage";
     public static final String TESTDATA_ENGINE_TOTAL_COST = "testdata.engine.totalCost";
 
-    /*private String numberOfInstances = "4";
-    private String software = "Free: Debian, CentOS, CoreOS, Ubuntu, or other User Provided OS";
-    private String machineClass = "Regular";
-    private String machineType = "n1-standard-8 (vCPUs: 8, RAM: 30GB)";
-    private String numberOfGPUs = "1";
-    private String GPUType = "NVIDIA Tesla V100";
-    private String dataCenterLocation = "Frankfurt (europe-west3)";
-    private String localSSD = "2x375 GB";
-    private String commitedUsage = "1 Year";
-    private String totalCost = "1,082.77";*/
-
     public static Engine withCredentialsFromProperty(){
         return new Engine(TestDataReader.getTestData(TESTDATA_ENGINE_NUMBER_OF_INSTANCES),
                 TestDataReader.getTestData(TESTDATA_ENGINE_SOFTWARE),

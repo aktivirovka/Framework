@@ -24,9 +24,10 @@ public class HardcoreTest extends BaseTest {
         Engine testEngine = EngineCreator.withCredentialsFromProperty();
         ResultPage resultPage = calculatorPage.createNewEngine(testEngine);
 
-        FillEmailPage emailPage3 = resultPage.clickEmailEstimate();
+        FillEmailPage emailPage3 = resultPage.clickButtonEmailEstimate();
         TimeSite timeSite = new TimeSite(driver);
         String emailAddress = timeSite.openSiteInNewTab().copyEmailAddress();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!! emailAddress is ------" + emailAddress);
         emailPage3.switchAndUseEmailAddress(emailAddress).clickButtonSendEmail();
         String emailMessage = timeSite.getMessage();
 
