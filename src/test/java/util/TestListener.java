@@ -49,17 +49,21 @@ public class TestListener implements ITestListener {
     }
 
     private void saveScreenshot(){
+        try {
         File screenCapture = ((TakesScreenshot) DriverSingleton
                 .getDriver())
                 .getScreenshotAs(OutputType.FILE);
-        try {
+
             FileUtils.copyFile(screenCapture, new File(
                     ".//target/screenshots/"
                     + getCurrentTimeAsString() +
                     ".png"));
         } catch (IOException e) {
             log.error("Failed to save screenshot: " + e.getLocalizedMessage());
+        }catch (Exception e){
+            log.error("Failed to create screenshot: " + e.getLocalizedMessage());
         }
+
     }
 
     private String getCurrentTimeAsString(){
