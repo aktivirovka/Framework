@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import util.DropdownSelector;
+import util.ExecutorUtils;
 
 public class FillEmailPage extends BasePage {
     private final DropdownSelector dropdownSelector = new DropdownSelector();
@@ -31,7 +32,9 @@ public class FillEmailPage extends BasePage {
         dropdownSelector.switchToFrame(driver);
 
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SCROLL DOWN");
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", fillingFormWindow);
+
+        ExecutorUtils.scrollToElement(driver,fillingFormWindow);
+      //  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", fillingFormWindow);
         //((JavascriptExecutor) driver).executeScript("window.scrollBy(0,200)");
 
 
@@ -63,7 +66,8 @@ public class FillEmailPage extends BasePage {
 
     public void clickButtonSendEmail() {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!! clickButtonSendEmail");
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", xpathFieldEmailAddress);
+        ExecutorUtils.scrollToElement(driver,xpathFieldEmailAddress);
+       // ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", xpathFieldEmailAddress);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", buttonSendEmail);
         //buttonSendEmail.click();
     }

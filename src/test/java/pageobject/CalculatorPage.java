@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import util.DropdownSelector;
+import util.ExecutorUtils;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -115,7 +116,9 @@ public class CalculatorPage extends BasePage {
 
     public CalculatorPage chooseMachineType(String choice) {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!chooseMachineType");
-       ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", xpathMachineClass);
+        ExecutorUtils.scrollToElement(driver,xpathMachineClass);
+
+      // ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", xpathMachineClass);
        /* JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,300)");
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!scrolllllllllllllllllllllllllllll");*/
@@ -139,8 +142,10 @@ public class CalculatorPage extends BasePage {
     }
 
     public CalculatorPage chooseNumberOfGPUs(String choice) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
-               , xpathMachineType);
+
+        ExecutorUtils.scrollToElement(driver,xpathMachineType);
+        /*((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
+               , xpathMachineType);*/
         //xpathChooseNumberOfGPUs.click();
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!chooseNumberOfGPUs");
         String fullName = String.format(xpathGPUProperties, choice);
@@ -161,8 +166,11 @@ public class CalculatorPage extends BasePage {
     }
 
     public CalculatorPage chooseLocalSSD(String choice) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
-                , xpathMachineType);
+
+
+
+        /*((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
+                , xpathMachineType);*/
         //xpathChooseLocalSSD.click();
         String fullName = String.format(xpathChoiceToPaste, choice);
         dropdownSelector.trySelectingOption(driver, xpathChooseLocalSSD, fullName);
@@ -232,7 +240,7 @@ public class CalculatorPage extends BasePage {
         return webElementList.size() != 0;
     }
 
-    public ResultPage createNewEngine(Engine testEngine) throws InterruptedException {
+    public ResultPage createNewEngine(Engine testEngine) {
         pasteNumberOfInstance(testEngine.getNumberOfInstances())
                 .clearFieldInstancesFor()
                 .chooseSoftware(testEngine.getSoftware())

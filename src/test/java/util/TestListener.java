@@ -49,7 +49,7 @@ public class TestListener implements ITestListener {
     }
 
     private void saveScreenshot(){
-        if (!System.getProperty("takescreenshot").equals("true")) {
+        if (System.getProperty("takescreenshot").equals("false")) {
             return;
         }
 

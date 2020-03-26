@@ -14,7 +14,7 @@ public class DropdownSelector {
 
     private final Logger logger = LogManager.getRootLogger();
     private static boolean isJavascriptExecutorUsed = false;
-    int millisecondsForSleeping = 100;
+    int millisecondsForSleeping = 150;
 
     public void trySelectingOption(WebDriver driver, WebElement dropdown, String optionXpath) {
 
