@@ -39,7 +39,7 @@ public class TimeSite extends BasePage {
 
         new WebDriverWait(driver, 15)
                 .until(ExpectedConditions.elementToBeClickable(mailAddress));
-
+        logger.info("Copy Email");
         return mailAddress.getText();
     }
 
