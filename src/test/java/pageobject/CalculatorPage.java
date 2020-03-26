@@ -51,8 +51,6 @@ public class CalculatorPage extends BasePage {
     private WebElement xpathButtonAddToEstimate;
     private String xpathChoiceToPaste = "//*[@class='md-select-menu-container md-active md-clickable']//*[contains(text(), '%s')]";
     private String xpathGPUProperties = "//div[@class='md-select-menu-container md-active md-clickable']//div[contains(text(),'%s')]";
-    @FindBy(xpath = "//*[@id ='resultBlock']//*[contains(text(),'Estimate')]")
-    private WebElement resultCalculatorWindow;
 
     private By frameLocator = By.xpath("//section[@class='devsite-wrapper']//iframe");
 
@@ -143,8 +141,6 @@ public class CalculatorPage extends BasePage {
     }
 
     public ResultPage clickAddToEstimate() {
-
-        ExecutorUtils.scrollToElement(driver,resultCalculatorWindow);
         browserSelector.clickElement(driver, xpathButtonAddToEstimate);
         return new ResultPage(driver);
     }
