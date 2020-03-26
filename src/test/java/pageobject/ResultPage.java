@@ -1,13 +1,12 @@
 package pageobject;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import util.DropdownSelector;
+import util.BrowserSelector;
 
 public class ResultPage extends BasePage {
-    private final DropdownSelector dropdownSelector = new DropdownSelector();
+    private final BrowserSelector browserSelector = new BrowserSelector();
     public ResultPage(WebDriver driver) {
         super(driver);
     }
@@ -16,15 +15,7 @@ public class ResultPage extends BasePage {
     private WebElement buttonEmailEstimate;
 
     public FillEmailPage clickButtonEmailEstimate() {
-
-        /*JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].click();", buttonEmailEstimate);*/
-
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!! clickButtonEmailEstimate");
-        dropdownSelector.clickElement(driver,buttonEmailEstimate);
-
-       // dropdownSelector.pressButton(driver, buttonEmailEstimate);
-       // buttonEmailEstimate.click();
+        browserSelector.clickElement(driver,buttonEmailEstimate);
         return new FillEmailPage(driver);
     }
 }

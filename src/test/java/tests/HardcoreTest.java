@@ -13,7 +13,7 @@ public class HardcoreTest extends BaseTest {
     protected static final String TEXT_TO_SEARCH = "Google Cloud Platform Pricing Calculator";
 
     @Test
-    public void fillCalculatorSendEmailAndCheckSum() throws IOException, UnsupportedFlavorException, InterruptedException {
+    public void fillCalculatorSendEmailAndCheckSum() {
         GooglePage googlePage = new GooglePage(driver);
         googlePage.goToPage();
         googlePage.clickOnIconSearch();
@@ -27,7 +27,6 @@ public class HardcoreTest extends BaseTest {
         FillEmailPage emailPage3 = resultPage.clickButtonEmailEstimate();
         TimeSite timeSite = new TimeSite(driver);
         String emailAddress = timeSite.openSiteInNewTab().copyEmailAddress();
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!! emailAddress is ------" + emailAddress);
         emailPage3.switchAndUseEmailAddress(emailAddress).clickButtonSendEmail();
         String emailMessage = timeSite.getMessage();
 
