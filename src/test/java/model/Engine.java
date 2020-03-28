@@ -102,7 +102,7 @@ public class Engine {
         this.commitedUsage = commitedUsage;
     }
 
-    public String getTotalCost() {
+    public String getRequaredCost() {
         return totalCost;
     }
 

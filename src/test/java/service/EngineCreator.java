@@ -16,7 +16,7 @@ public class EngineCreator {
     public static final String TESTDATA_ENGINE_COMMITED_USAGE = "testdata.engine.commitedUsage";
     public static final String TESTDATA_ENGINE_TOTAL_COST = "testdata.engine.totalCost";
 
-    public static Engine withCredentialsFromProperty(){
+    public static Engine withCredentialsFromProperty() {
         return new Engine(TestDataReader.getTestData(TESTDATA_ENGINE_NUMBER_OF_INSTANCES),
                 TestDataReader.getTestData(TESTDATA_ENGINE_SOFTWARE),
                 TestDataReader.getTestData(TESTDATA_ENGINE_MACHINE_CLASS),
@@ -28,5 +28,4 @@ public class EngineCreator {
                 TestDataReader.getTestData(TESTDATA_ENGINE_COMMITED_USAGE),
                 TestDataReader.getTestData(TESTDATA_ENGINE_TOTAL_COST));
     }
-
 }

@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DriverUtils {
     private static int TIME_FOR_WAIT = 15;
+    private static By frameParentLocator = By.xpath("//section[@class='devsite-wrapper']//iframe");
 
     public static void waitUntilElementToBeClickableUsingXpath(WebDriver driver, String optionXpath) {
         new WebDriverWait(driver, TIME_FOR_WAIT)
@@ -28,9 +29,11 @@ public class DriverUtils {
         new WebDriverWait(driver, TIME_FOR_WAIT)
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
     }
-    public static void switchToFrame(WebDriver driver, By xpathParent, String nameOrId) {
+
+    public static void switchToFrame(WebDriver driver) {
         new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(xpathParent));
-        driver.switchTo().frame(nameOrId);
+                .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameParentLocator));
+        String frameChildNameOrId = "myFrame";
+        driver.switchTo().frame(frameChildNameOrId);
     }
 }

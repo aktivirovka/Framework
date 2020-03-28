@@ -1,22 +1,18 @@
 package pageobject;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
-import util.BrowserSelector;
 import util.DriverUtils;
 import util.JavaScriptExecutorUtils;
 
 public class TimeSitePage extends BasePage {
-    private final Logger logger = LogManager.getRootLogger();
-    private final BrowserSelector browserSelector = new BrowserSelector();
 
     public TimeSitePage(WebDriver driver) {
         super(driver);
         url = "https://dropmail.me/ru/";
     }
 
+    protected String resultOfCalculation = null;
     @FindBy(className = "email")
     private WebElement mailAddress;
     @FindBy(xpath = "//*[contains(text(), 'Compute User')]")
@@ -42,10 +38,14 @@ public class TimeSitePage extends BasePage {
         return getMessageElement.getText();
     }
 
-    public boolean isCostTrue(String totalCost, String message) {
-        String[] arrayWords = message.split(":", 2);
+    /**
+     * The method accepts a message with total amount calculations, retrieves
+     * this amount from the text message, and returns this amount
+     */
+    public String getResultOfCalculation(String messageFromCalculator) {
+        String[] arrayWords = messageFromCalculator.split(":", 2);
         String[] arrayWords2 = arrayWords[1].split(":", 2);
         String[] arrayWords3 = arrayWords2[1].split("\n\n", 2);
-        return arrayWords3[0].trim().equals(totalCost);
+        return arrayWords3[0].trim();
     }
 }

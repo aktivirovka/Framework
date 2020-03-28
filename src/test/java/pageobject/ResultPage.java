@@ -7,6 +7,7 @@ import util.BrowserSelector;
 
 public class ResultPage extends BasePage {
     private final BrowserSelector browserSelector = new BrowserSelector();
+
     public ResultPage(WebDriver driver) {
         super(driver);
     }

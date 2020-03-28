@@ -1,6 +1,5 @@
 package util;
 
-
 import driver.DriverSingleton;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -10,12 +9,10 @@ import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-
 
 public class TestListener implements ITestListener {
     private Logger log = LogManager.getRootLogger();
@@ -48,30 +45,27 @@ public class TestListener implements ITestListener {
 
     }
 
-    private void saveScreenshot(){
+    private void saveScreenshot() {
         if (System.getProperty("takescreenshot").equals("false")) {
             return;
         }
-
         try {
-        File screenCapture = ((TakesScreenshot) DriverSingleton
-                .getDriver())
-                .getScreenshotAs(OutputType.FILE);
-
+            File screenCapture = ((TakesScreenshot) DriverSingleton
+                    .getDriver())
+                    .getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenCapture, new File(
                     ".//target/screenshots/"
-                    + getCurrentTimeAsString() +
-                    ".png"));
+                            + getCurrentTimeAsString() +
+                            ".png"));
         } catch (IOException e) {
             log.error("Failed to save screenshot: " + e.getLocalizedMessage());
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("Failed to create screenshot: " + e.getLocalizedMessage());
         }
-
     }
 
-    private String getCurrentTimeAsString(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "uuuu-MM-dd_HH-mm-ss" );
+    private String getCurrentTimeAsString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd_HH-mm-ss");
         return ZonedDateTime.now().format(formatter);
     }
 }

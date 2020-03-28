@@ -3,7 +3,6 @@ package pageobject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import util.DriverUtils;
-import util.JavaScriptExecutorUtils;
 
 public class SearchResultsPage extends BasePage {
     public SearchResultsPage(WebDriver driver) {

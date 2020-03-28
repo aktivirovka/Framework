@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import util.BrowserSelector;
 import util.DriverUtils;
 import util.JavaScriptExecutorUtils;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -49,12 +50,10 @@ public class CalculatorPage extends BasePage {
     private WebElement buttonAddToEstimate;
     private String xpathChoiceToPaste = "//*[@class='md-select-menu-container md-active md-clickable']//*[contains(text(), '%s')]";
     private String xpathGPUProperties = "//div[@class='md-select-menu-container md-active md-clickable']//div[contains(text(),'%s')]";
-    protected By frameParentLocator = By.xpath("//section[@class='devsite-wrapper']//iframe");
-    protected String frameChildNameOrId = "myFrame";
 
     public CalculatorPage activateComputeEngine() {
         driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-       DriverUtils.switchToFrame(driver, frameParentLocator, frameChildNameOrId);
+        DriverUtils.switchToFrame(driver);
         DriverUtils.waitUntilElementToBeClickableUsingWebElement(driver, computeEngine);
         computeEngine.click();
         logger.info("Frame was activated");
@@ -124,10 +123,9 @@ public class CalculatorPage extends BasePage {
         return this;
     }
 
-    public CalculatorPage chooseCommitedUsage(String choice) {
+    public void chooseCommitedUsage(String choice) {
         String fullName = String.format(xpathChoiceToPaste, choice);
         browserSelector.trySelectingOption(driver, chooseCommitedUsage, fullName);
-        return this;
     }
 
     public ResultPage clickAddToEstimate() {
@@ -135,14 +133,13 @@ public class CalculatorPage extends BasePage {
         return new ResultPage(driver);
     }
 
-
     public boolean isTitleTrue(String textToSearch) {
         return driver.getTitle().equals(textToSearch);
     }
 
     public boolean isComputeEngineButtonExist() {
         driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-        DriverUtils.switchToFrame(driver, frameParentLocator, frameChildNameOrId);
+        DriverUtils.switchToFrame(driver);
         List<WebElement> webElementList = driver.findElements(By.xpath("//*[text()='Compute Engine']"));
         return webElementList.size() != 0;
     }

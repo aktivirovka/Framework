@@ -12,7 +12,6 @@ public class FillEmailPage extends BasePage {
     public FillEmailPage(WebDriver driver) {
         super(driver);
     }
-    private CalculatorPage calculatorPage = new CalculatorPage(driver);
 
     @FindBy(xpath = "//*[contains(text(),'Email')]/../input[@name='description']")
     private WebElement fieldEmailAddress;
@@ -23,7 +22,7 @@ public class FillEmailPage extends BasePage {
 
     public FillEmailPage switchAndUseEmailAddress(String emailAddress) {
         switchTabByIndex(0);
-        browserSelector.switchToFrameIfJavaScriptUsed(driver, calculatorPage.frameParentLocator, calculatorPage.frameChildNameOrId);
+        browserSelector.switchToFrameIfJavaScriptUsed(driver);
         JavaScriptExecutorUtils.scrollToElement(driver, fillingFormWindow);
         DriverUtils.waitUntilElementToBeClickableUsingWebElement(driver, fieldEmailAddress);
         fieldEmailAddress.sendKeys(emailAddress);
