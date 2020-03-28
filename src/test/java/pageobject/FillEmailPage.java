@@ -2,10 +2,9 @@ package pageobject;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import util.BrowserSelector;
-import util.ExecutorUtils;
+import util.DriverUtils;
+import util.JavaScriptExecutorUtils;
 
 public class FillEmailPage extends BasePage {
     private final BrowserSelector browserSelector = new BrowserSelector();
@@ -13,9 +12,10 @@ public class FillEmailPage extends BasePage {
     public FillEmailPage(WebDriver driver) {
         super(driver);
     }
+    private CalculatorPage calculatorPage = new CalculatorPage(driver);
 
     @FindBy(xpath = "//*[contains(text(),'Email')]/../input[@name='description']")
-    private WebElement xpathFieldEmailAddress;
+    private WebElement fieldEmailAddress;
     @FindBy(xpath = "//*[contains(text(),'Send Email')]/.")
     private WebElement buttonSendEmail;
     @FindBy(xpath = "//*[contains(text(),'Email Your Estimate')]")
@@ -23,17 +23,15 @@ public class FillEmailPage extends BasePage {
 
     public FillEmailPage switchAndUseEmailAddress(String emailAddress) {
         switchTabByIndex(0);
-        browserSelector.switchToFrame(driver);
-        ExecutorUtils.scrollToElement(driver, fillingFormWindow);
-        new WebDriverWait(driver, 15)
-                .until(ExpectedConditions.elementToBeClickable(xpathFieldEmailAddress));
-        xpathFieldEmailAddress.sendKeys(emailAddress);
+        browserSelector.switchToFrameIfJavaScriptUsed(driver, calculatorPage.frameParentLocator, calculatorPage.frameChildNameOrId);
+        JavaScriptExecutorUtils.scrollToElement(driver, fillingFormWindow);
+        DriverUtils.waitUntilElementToBeClickableUsingWebElement(driver, fieldEmailAddress);
+        fieldEmailAddress.sendKeys(emailAddress);
         return this;
     }
 
     public void clickButtonSendEmail() {
-        ExecutorUtils.scrollToElement(driver, xpathFieldEmailAddress);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", buttonSendEmail);
-
+        JavaScriptExecutorUtils.scrollToElement(driver, fieldEmailAddress);
+        JavaScriptExecutorUtils.clickThroughJS(driver, buttonSendEmail);
     }
 }

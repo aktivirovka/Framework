@@ -4,7 +4,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,38 +15,45 @@ public class BrowserSelector {
     private static boolean isJavascriptExecutorUsed = false;
     int millisecondsForSleeping = 150;
 
-    public void trySelectingOption(WebDriver driver, WebElement dropdown, String optionXpath) {
+    public void trySelectingOption(WebDriver driver, WebElement webElement, String optionXpath) {
         for (int i = 0; i < 2; i++) {
             try {
                 if (isJavascriptExecutorUsed) {
 
-                    new WebDriverWait(driver, 15)
-                            .until(ExpectedConditions.elementToBeClickable(dropdown));
-                    JavascriptExecutor executor = (JavascriptExecutor) driver;
-                    executor.executeScript("arguments[0].click();", dropdown);
+                    DriverUtils.waitUntilElementToBeClickableUsingWebElement(driver, webElement);
+                    /*new WebDriverWait(driver, 15)
+                            .until(ExpectedConditions.elementToBeClickable(webElement));*/
+                    /*JavascriptExecutor executor = (JavascriptExecutor) driver;
+                    executor.executeScript("arguments[0].click();", webElement);*/
+                    JavaScriptExecutorUtils.clickThroughJS(driver, webElement);
 
                     Thread.sleep(millisecondsForSleeping);
-                    new WebDriverWait(driver, 15)
-                            .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(optionXpath))));
+
+                    DriverUtils.waitUntilElementToBeClickableUsingXpath(driver, optionXpath);
+
+                    /*new WebDriverWait(driver, 15)
+                            .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(optionXpath))));*/
+
                     WebElement element = driver.findElement(By.xpath(optionXpath));
                     Thread.sleep(millisecondsForSleeping);
-                    executor.executeScript("arguments[0].click();", element);
-
+                    JavaScriptExecutorUtils.clickThroughJS(driver, element);
+                    //  executor.executeScript("arguments[0].click();", element);
                     return;
 
                 } else {
-                    new WebDriverWait(driver, 15)
-                            .until(ExpectedConditions.elementToBeClickable(dropdown));
-                    dropdown.click();
+                    /*new WebDriverWait(driver, 15)
+                            .until(ExpectedConditions.elementToBeClickable(webElement));*/
+                    DriverUtils.waitUntilElementToBeClickableUsingWebElement(driver, webElement);
+                    webElement.click();
 
-                    new WebDriverWait(driver, 15)
-                            .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(optionXpath))));
-
+                   /* new WebDriverWait(driver, 15)
+                            .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(optionXpath))));*/
+                    DriverUtils.waitUntilElementToBeClickableUsingXpath(driver, optionXpath);
                     driver.findElement(By.xpath(optionXpath)).click();
                     return;
                 }
             } catch (Exception e) {
-                logger.log(Level.ERROR, "Cannot select the option. Switching the section mechanism");
+                logger.log(Level.ERROR, "Cannot select the option. Switching the section mechanism " + e.getMessage());
                 isJavascriptExecutorUsed = true;
             }
         }
@@ -56,29 +62,33 @@ public class BrowserSelector {
     public void clickElement(WebDriver driver, WebElement webElement) {
         try {
             if (isJavascriptExecutorUsed) {
-                new WebDriverWait(driver, 15)
-                        .until(ExpectedConditions.elementToBeClickable(webElement));
-
-                JavascriptExecutor executor = (JavascriptExecutor) driver;
-                executor.executeScript("arguments[0].click();", webElement);
+                /*new WebDriverWait(driver, 15)
+                        .until(ExpectedConditions.elementToBeClickable(webElement));*/
+                DriverUtils.waitUntilElementToBeClickableUsingWebElement(driver, webElement);
+                JavaScriptExecutorUtils.clickThroughJS(driver, webElement);
+               /* JavascriptExecutor executor = (JavascriptExecutor) driver;
+                executor.executeScript("arguments[0].click();", webElement);*/
 
             } else {
-                new WebDriverWait(driver, 15)
-                        .until(ExpectedConditions.elementToBeClickable(webElement));
+                /*new WebDriverWait(driver, 15)
+                        .until(ExpectedConditions.elementToBeClickable(webElement));*/
+                DriverUtils.waitUntilElementToBeClickableUsingWebElement(driver, webElement);
                 webElement.click();
             }
         } catch (Exception e) {
-            logger.log(Level.ERROR, "Cannot press the button.");
+            logger.log(Level.ERROR, "Cannot press the button." + e.getMessage());
         }
     }
 
-    public void switchToFrame(WebDriver driver) {
+    public void switchToFrameIfJavaScriptUsed(WebDriver driver, By xpathParent, String nameOrId) {
         if (isJavascriptExecutorUsed) {
-            new WebDriverWait(driver, 15)
+            DriverUtils.switchToFrame(driver, xpathParent, nameOrId);
+            /*new WebDriverWait(driver, 15)
                     .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.xpath("//section[@class='devsite-wrapper']//iframe")));
-            driver.switchTo().frame("myFrame");
+            driver.switchTo().frame("myFrame");*/
         }
     }
+
 
 }
 

@@ -17,13 +17,12 @@ public class GooglePage extends BasePage {
     @FindBy(xpath = "//*[@class='devsite-searchbox']/input")
     private WebElement iconSearch;
 
-
     public GooglePage clickOnIconSearch() {
         browserSelector.clickElement(driver, iconSearch);
         return this;
     }
 
-    public SearchResultsPage PasteTextInSearchField(String textToSearch) {
+    public SearchResultsPage pasteTextInSearchField(String textToSearch) {
         iconSearch.sendKeys(textToSearch);
         iconSearch.sendKeys(Keys.ENTER);
         return new SearchResultsPage(driver);

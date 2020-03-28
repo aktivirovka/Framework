@@ -12,13 +12,12 @@ import util.TestListener;
 
 
 @Listeners({TestListener.class})
-abstract public class BaseTest {
+public abstract class BaseTest {
     protected WebDriver driver;
 
     @BeforeMethod()
     public void createDriver() {
         driver = DriverSingleton.getDriver();
-
     }
 
     @AfterMethod(alwaysRun = true)

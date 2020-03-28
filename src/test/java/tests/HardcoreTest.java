@@ -6,9 +6,6 @@ import org.testng.annotations.Test;
 import pageobject.*;
 import service.EngineCreator;
 
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
-
 public class HardcoreTest extends BaseTest {
     protected static final String TEXT_TO_SEARCH = "Google Cloud Platform Pricing Calculator";
 
@@ -16,8 +13,8 @@ public class HardcoreTest extends BaseTest {
     public void fillCalculatorSendEmailAndCheckSum() {
         GooglePage googlePage = new GooglePage(driver);
         googlePage.goToPage();
-        googlePage.clickOnIconSearch();
-        SearchResultsPage searchResultsPage = googlePage.PasteTextInSearchField(TEXT_TO_SEARCH);
+
+        SearchResultsPage searchResultsPage = googlePage.clickOnIconSearch().pasteTextInSearchField(TEXT_TO_SEARCH);
         CalculatorPage calculatorPage = searchResultsPage.goToCalculatorPage(TEXT_TO_SEARCH)
                 .activateComputeEngine();
 
@@ -25,12 +22,12 @@ public class HardcoreTest extends BaseTest {
         ResultPage resultPage = calculatorPage.createNewEngine(testEngine);
 
         FillEmailPage emailPage3 = resultPage.clickButtonEmailEstimate();
-        TimeSite timeSite = new TimeSite(driver);
-        String emailAddress = timeSite.openSiteInNewTab().copyEmailAddress();
+        TimeSitePage timeSitePage = new TimeSitePage(driver);
+        String emailAddress = timeSitePage.openSiteInNewTab().copyEmailAddress();
         emailPage3.switchAndUseEmailAddress(emailAddress).clickButtonSendEmail();
-        String emailMessage = timeSite.getMessage();
+        String emailMessage = timeSitePage.getMessage();
 
-        Assert.assertTrue("Total estimated cost is wrong", timeSite.isCostTrue(testEngine.getTotalCost(), emailMessage));
+        Assert.assertTrue("Total estimated cost is wrong", timeSitePage.isCostTrue(testEngine.getTotalCost(), emailMessage));
 
     }
 }

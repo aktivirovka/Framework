@@ -15,7 +15,7 @@ public class OpenCalculatorPageTest extends BaseTest {
         GooglePage googlePage = new GooglePage(driver);
         googlePage.goToPage();
         googlePage.clickOnIconSearch();
-        SearchResultsPage searchResultsPage = googlePage.PasteTextInSearchField(HardcoreTest.TEXT_TO_SEARCH);
+        SearchResultsPage searchResultsPage = googlePage.pasteTextInSearchField(HardcoreTest.TEXT_TO_SEARCH);
         CalculatorPage calculatorPage = searchResultsPage.goToCalculatorPage(HardcoreTest.TEXT_TO_SEARCH);
 
         Assert.assertTrue("Title of the page is wrong",calculatorPage.isTitleTrue(HardcoreTest.TEXT_TO_SEARCH));
