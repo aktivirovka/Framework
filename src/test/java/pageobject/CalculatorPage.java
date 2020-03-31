@@ -18,10 +18,6 @@ public class CalculatorPage extends BasePage {
     private final Logger logger = LogManager.getRootLogger();
     private final BrowserSelector browserSelector = new BrowserSelector();
 
-    public CalculatorPage(WebDriver driver) {
-        super(driver);
-    }
-
     @FindBy(xpath = "//*[text()='Compute Engine'][1]")
     private WebElement computeEngine;
     @FindBy(xpath = "//*[@name='quantity']")
@@ -130,7 +126,7 @@ public class CalculatorPage extends BasePage {
 
     public ResultPage clickAddToEstimate() {
         browserSelector.clickElement(driver, buttonAddToEstimate);
-        return new ResultPage(driver);
+        return new ResultPage();
     }
 
     public boolean isTitleTrue(String textToSearch) {

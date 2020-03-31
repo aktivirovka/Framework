@@ -9,8 +9,8 @@ import util.BrowserSelector;
 public class GooglePage extends BasePage {
     private final BrowserSelector browserSelector = new BrowserSelector();
 
-    public GooglePage(WebDriver driver) {
-        super(driver);
+    public GooglePage() {
+        super();
         url = "https://cloud.google.com/";
     }
 
@@ -25,6 +25,6 @@ public class GooglePage extends BasePage {
     public SearchResultsPage pasteTextInSearchField(String textToSearch) {
         iconSearch.sendKeys(textToSearch);
         iconSearch.sendKeys(Keys.ENTER);
-        return new SearchResultsPage(driver);
+        return new SearchResultsPage();
     }
 }

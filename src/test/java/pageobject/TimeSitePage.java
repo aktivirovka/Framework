@@ -7,9 +7,9 @@ import util.JavaScriptExecutorUtils;
 
 public class TimeSitePage extends BasePage {
 
-    public TimeSitePage(WebDriver driver) {
-        super(driver);
-        url = "https://dropmail.me/ru/";
+    public TimeSitePage() {
+        super();
+       url = "https://dropmail.me/ru/";
     }
 
     protected String resultOfCalculation = null;

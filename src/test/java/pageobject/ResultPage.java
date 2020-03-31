@@ -8,15 +8,11 @@ import util.BrowserSelector;
 public class ResultPage extends BasePage {
     private final BrowserSelector browserSelector = new BrowserSelector();
 
-    public ResultPage(WebDriver driver) {
-        super(driver);
-    }
-
     @FindBy(id = "email_quote")
     private WebElement buttonEmailEstimate;
 
     public FillEmailPage clickButtonEmailEstimate() {
         browserSelector.clickElement(driver,buttonEmailEstimate);
-        return new FillEmailPage(driver);
+        return new FillEmailPage();
     }
 }

@@ -9,7 +9,7 @@ public class OpenCalculatorPageTest extends BaseTest {
 
     @Test
     public void openCalculatorPageAndCompareTitleOfPage() {
-        GooglePage googlePage = new GooglePage(driver);
+        GooglePage googlePage = new GooglePage();
         googlePage.goToPage();
         CalculatorPage calculatorPage = googlePage.clickOnIconSearch()
                 .pasteTextInSearchField(HardcoreTest.TEXT_TO_SEARCH)
@@ -20,7 +20,7 @@ public class OpenCalculatorPageTest extends BaseTest {
 
     @Test
     public void openCalculatorPageAndFindComputeEngineButton() {
-        GooglePage googlePage = new GooglePage(driver);
+        GooglePage googlePage = new GooglePage();
         googlePage.goToPage();
         CalculatorPage calculatorPage = googlePage.clickOnIconSearch()
                 .pasteTextInSearchField(HardcoreTest.TEXT_TO_SEARCH)

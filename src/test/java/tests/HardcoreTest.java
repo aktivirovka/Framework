@@ -11,17 +11,17 @@ public class HardcoreTest extends BaseTest {
 
     @Test
     public void fillCalculatorSendEmailAndCheckSum() {
-        GooglePage googlePage = new GooglePage(driver);
+        Engine testEngine = EngineCreator.withCredentialsFromProperty();
+        GooglePage googlePage = new GooglePage();
         googlePage.goToPage();
         CalculatorPage calculatorPage = googlePage.clickOnIconSearch()
                 .pasteTextInSearchField(TEXT_TO_SEARCH)
                 .goToCalculatorPage(TEXT_TO_SEARCH)
                 .activateComputeEngine();
 
-        Engine testEngine = EngineCreator.withCredentialsFromProperty();
         FillEmailPage emailPage3 = calculatorPage.createNewEngine(testEngine)
                 .clickButtonEmailEstimate();
-        TimeSitePage timeSitePage = new TimeSitePage(driver);
+        TimeSitePage timeSitePage = new TimeSitePage();
         String emailAddress = timeSitePage.openSiteInNewTab().copyEmailAddress();
         emailPage3.switchAndUseEmailAddress(emailAddress).clickButtonSendEmail();
         String emailMessage = timeSitePage.getMessage();
