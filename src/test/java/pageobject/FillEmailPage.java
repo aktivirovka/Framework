@@ -7,6 +7,17 @@ import util.DriverUtils;
 import util.JavaScriptExecutorUtils;
 
 public class FillEmailPage extends BasePage {
+
+    private String emailAddress;
+
+    public FillEmailPage(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public FillEmailPage() {
+        super();
+    }
+
     private final BrowserSelector browserSelector = new BrowserSelector();
 
     @FindBy(xpath = "//*[contains(text(),'Email')]/../input[@name='description']")
@@ -16,7 +27,7 @@ public class FillEmailPage extends BasePage {
     @FindBy(xpath = "//*[contains(text(),'Email Your Estimate')]")
     private WebElement fillingFormWindow;
 
-    public FillEmailPage switchAndUseEmailAddress(String emailAddress) {
+    public FillEmailPage switchAndUseEmailAddress() {
         switchTabByIndex(0);
         browserSelector.switchToFrameIfJavaScriptUsed(driver);
         JavaScriptExecutorUtils.scrollToElement(driver, fillingFormWindow);
@@ -25,8 +36,17 @@ public class FillEmailPage extends BasePage {
         return this;
     }
 
-    public void clickButtonSendEmail() {
+    public TimeSitePage clickButtonSendEmail() {
         JavaScriptExecutorUtils.scrollToElement(driver, fieldEmailAddress);
         JavaScriptExecutorUtils.clickThroughJS(driver, buttonSendEmail);
+        return new TimeSitePage();
+    }
+
+    public TimeSitePage openTimeSiteInNewTab() {
+        JavaScriptExecutorUtils.createNewTab(driver);
+        switchTabByIndex(1);
+        TimeSitePage timePage = new TimeSitePage();
+        timePage.goToPage();
+        return timePage;
     }
 }

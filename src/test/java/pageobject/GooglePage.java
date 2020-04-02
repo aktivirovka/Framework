@@ -7,15 +7,21 @@ import org.openqa.selenium.support.FindBy;
 import util.BrowserSelector;
 
 public class GooglePage extends BasePage {
-    private final BrowserSelector browserSelector = new BrowserSelector();
 
     public GooglePage() {
         super();
         url = "https://cloud.google.com/";
     }
 
+    private final BrowserSelector browserSelector = new BrowserSelector();
+
     @FindBy(xpath = "//*[@class='devsite-searchbox']/input")
     private WebElement iconSearch;
+
+    public GooglePage openPage() {
+        goToPage();
+        return this;
+    }
 
     public GooglePage clickOnIconSearch() {
         browserSelector.clickElement(driver, iconSearch);

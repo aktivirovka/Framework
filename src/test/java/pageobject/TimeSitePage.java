@@ -9,9 +9,10 @@ public class TimeSitePage extends BasePage {
 
     public TimeSitePage() {
         super();
-       url = "https://dropmail.me/ru/";
+        url = "https://dropmail.me/ru/";
     }
 
+    private String messageFromCalculator;
     protected String resultOfCalculation = null;
     @FindBy(className = "email")
     private WebElement mailAddress;
@@ -26,23 +27,25 @@ public class TimeSitePage extends BasePage {
         return this;
     }
 
-    public String copyEmailAddress() {
+    public FillEmailPage copyEmailAddress() {
         JavaScriptExecutorUtils.waitForPageToLoad(driver);
         DriverUtils.waitUntilElementToBeClickableUsingWebElement(driver, mailAddress);
-        return mailAddress.getText();
+        String emailAddress = mailAddress.getText();
+        return new FillEmailPage(emailAddress);
     }
 
-    public String getMessage() {
+    public TimeSitePage getMessage() {
         switchTabByIndex(1);
         DriverUtils.waitUntilPresenceOfElement(driver, getMessage);
-        return getMessageElement.getText();
+        messageFromCalculator = getMessageElement.getText();
+        return this;
     }
 
     /**
      * The method accepts a message with total amount calculations, retrieves
      * this amount from the text message, and returns this amount
      */
-    public String getResultOfCalculation(String messageFromCalculator) {
+    public String getResultOfCalculation() {
         String[] arrayWords = messageFromCalculator.split(":", 2);
         String[] arrayWords2 = arrayWords[1].split(":", 2);
         String[] arrayWords3 = arrayWords2[1].split("\n\n", 2);

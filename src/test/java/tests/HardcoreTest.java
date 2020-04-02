@@ -12,20 +12,20 @@ public class HardcoreTest extends BaseTest {
     @Test
     public void fillCalculatorSendEmailAndCheckSum() {
         Engine testEngine = EngineCreator.withCredentialsFromProperty();
-        GooglePage googlePage = new GooglePage();
-        googlePage.goToPage();
-        CalculatorPage calculatorPage = googlePage.clickOnIconSearch()
+        String resultOfCalculation = new GooglePage()
+                .openPage()
+                .clickOnIconSearch()
                 .pasteTextInSearchField(TEXT_TO_SEARCH)
                 .goToCalculatorPage(TEXT_TO_SEARCH)
-                .activateComputeEngine();
-
-        FillEmailPage emailPage3 = calculatorPage.createNewEngine(testEngine)
-                .clickButtonEmailEstimate();
-        TimeSitePage timeSitePage = new TimeSitePage();
-        String emailAddress = timeSitePage.openSiteInNewTab().copyEmailAddress();
-        emailPage3.switchAndUseEmailAddress(emailAddress).clickButtonSendEmail();
-        String emailMessage = timeSitePage.getMessage();
-        String resultOfCalculation = timeSitePage.getResultOfCalculation(emailMessage);
+                .activateComputeEngine()
+                .createNewEngine(testEngine)
+                .clickButtonEmailEstimate()
+                .openTimeSiteInNewTab()
+                .copyEmailAddress()
+                .switchAndUseEmailAddress()
+                .clickButtonSendEmail()
+                .getMessage()
+                .getResultOfCalculation();
 
         Assert.assertEquals("Total estimated cost is wrong. Expected result is "
                         + testEngine.getRequaredCost() + ", current result is " + resultOfCalculation,
